@@ -87,12 +87,16 @@ puts "\n7. Testing query logging..."
 log_output = []
 ActiveSupport::Notifications.subscribe("sql.active_record") do |*args|
   event = ActiveSupport::Notifications::Event.new(*args)
-  log_output << event.payload[:sql] if event.payload[:name] == "Sequel"
+  # Sequel queries are logged with name "Sequel"
+  if event.payload[:name] == "Sequel"
+    log_output << event.payload[:sql]
+  end
 end
 
 DB[:test_items].where(name: "Test").all
+# Verify that at least one Sequel query was logged
 raise "Query not logged" if log_output.empty?
-puts "   ✓ Queries are logged to ActiveRecord"
+puts "   ✓ Queries are logged to ActiveRecord (#{log_output.length} query/queries)"
 
 # Cleanup
 DB.drop_table? :test_items

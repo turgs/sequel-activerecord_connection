@@ -162,7 +162,7 @@ To ensure compatibility with future Rails versions:
    gem "rails", github: "rails/rails"
    ```
 
-3. **Version Constraints**: The gem uses `< 8.2` constraint to allow patch releases but prevent untested major version bumps. Update this constraint when testing confirms compatibility with new versions.
+3. **Version Constraints**: The gem uses `< 8.2` constraint in the gemspec file (`sequel-activerecord_connection.gemspec`) to allow patch releases but prevent untested major version bumps. Update this constraint when testing confirms compatibility with new versions.
 
 4. **CI Coverage**: The gem's CI tests against multiple Ruby and Rails versions. When a new Rails version is released:
    - Add a new Gemfile in `gemfiles/`
